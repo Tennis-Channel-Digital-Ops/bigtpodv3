@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE BIG T | Tennis Channel Podcast</title>
+    <link rel="icon" href="https://www.tennischannel.com/image/16/16/favicon.png?v=20251015091526" type="image/png">
+    
+    <!-- Typekit & Google Fonts -->
+    <link rel="stylesheet" href="https://use.typekit.net/akn3zxw.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=Space+Grotesk:wght@300;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <style>
+        :root {
+            --neon-yellow: #d4e100;
+            --tc-blue: #00285e;
+            --bg-deep: #050505;
+            --surface: #0a0a0a;
+            --glass: rgba(255, 255, 255, 0.02);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --font-display: "itc-avant-garde-gothic-pro", sans-serif;
+            --font-body: 'Inter', sans-serif;
+            --font-mono: 'Space Grotesk', sans-serif;
+            --transition: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: #fff;
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* --- BROADCAST OVERLAYS --- */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                rgba(0, 0, 0, 0.1) 51%
+            );
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 99;
+            opacity: 0.3;
+        }
+
+        .grain {
+            position: fixed;
+            inset: 0;
+            background-image: url("https://upload.wikimedia.org/wikipedia/commons/7/76/1k_Noise_Texture.png");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 100;
+        }
+
+        /* --- KINETIC TICKER --- */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            background: var(--neon-yellow);
+            color: #000;
+            padding: 10px 0;
+            font-family: var(--font-display);
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .ticker {
+            display: flex;
+            white-space: nowrap;
+            animation: ticker 30s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1, h2, h3 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-weight: 900;
+        }
+
+        .outline-text {
+            -webkit-text-stroke: 1px rgba(255,255,255,0.3);
+            color: transparent;
+            transition: -webkit-text-stroke 0.3s;
+        }
+
+        .outline-text:hover {
+            -webkit-text-stroke: 1px var(--neon-yellow);
+        }
+
+        /* --- HERO --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: #000;
+            overflow: hidden;
+            padding: 100px 0;
+        }
+
+        .hero-video-mock {
+            position: absolute;
+            inset: 0;
+            background: url('https://i.postimg.cc/fW7Qy2BS/TBT-Landing-Page-About-BG-01.jpg') center/cover;
+            opacity: 0.5;
+            filter: contrast(1.2) brightness(0.6);
+        }
+
+        .hero-vignette {
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 30%, transparent 0%, var(--bg-deep) 90%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 5;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 80px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            gap: 60px;
+        }
+
+        .hero-main-group {
+            flex: 1;
+        }
+
+        .hero-title {
+            font-size: clamp(5rem, 12vw, 12rem);
+            line-height: 0.8;
+            letter-spacing: -0.05em;
+            margin-bottom: 20px;
+        }
+
+        .hero-tagline {
+            font-family: var(--font-mono);
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            color: var(--neon-yellow);
+            letter-spacing: 4px;
+            margin-bottom: 40px;
+            display: block;
+        }
+
+        .hero-description {
+            max-width: 450px;
+            font-family: var(--font-body);
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            border-left: 1px solid var(--neon-yellow);
+            padding-left: 30px;
+            padding-bottom: 10px;
+        }
+
+        .hero-description strong {
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .hero-description .highlight {
+            color: var(--neon-yellow);
+            font-weight: 700;
+        }
+
+        /* --- BUTTONS --- */
+        .btn-action {
+            position: relative;
+            padding: 20px 45px;
+            background: var(--neon-yellow);
+            color: #000;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            overflow: hidden;
+            font-family: var(--font-display);
+            transition: 0.3s var(--transition);
+        }
+
+        .btn-action:hover {
+            background: #fff;
+            transform: skewX(-5deg);
+        }
+
+        .btn-action::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+
+        .btn-action:hover::before {
+            left: 100%;
+        }
+
+        /* --- TALENT (SQUAD) --- */
+        .squad-section {
+            padding: 150px 0;
+            background: #050505;
+            position: relative;
+        }
+
+        .court-lines {
+            position: absolute;
+            inset: 0;
+            border: 1px solid rgba(255,255,255,0.03);
+            margin: 50px;
+            pointer-events: none;
+        }
+
+        .talent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            perspective: 1000px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .talent-card {
+            height: 600px;
+            background: var(--surface);
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            border: 1px solid var(--border-glass);
+        }
+
+        .talent-img-wrapper {
+            position: absolute;
+            inset: 0;
+            transform: translateZ(20px);
+        }
+
+        .talent-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1);
+            transition: 0.6s var(--transition);
+        }
+
+        .talent-card:hover .talent-img {
+            filter: grayscale(0);
+            transform: scale(1.05);
+        }
+
+        .talent-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 40px;
+            transform: translateZ(50px);
+        }
+
+        .talent-name-big {
+            font-size: 3rem;
+            line-height: 0.85;
+            margin-bottom: 5px;
+        }
+
+        .talent-stat {
+            font-family: var(--font-mono);
+            color: var(--neon-yellow);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        /* --- AUDIO HUB --- */
+        .audio-section {
+            padding: 120px 0;
+            background: #000;
+            border-top: 1px solid var(--border-glass);
+        }
+
+        .glass-panel {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid var(--border-glass);
+            padding: 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .sound-bars {
+            display: flex;
+            align-items: flex-end;
+            gap: 4px;
+            height: 40px;
+            margin-bottom: 20px;
+        }
+
+        .bar {
+            width: 3px;
+            background: var(--neon-yellow);
+            animation: sound 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes sound {
+            0% { height: 10%; }
+            100% { height: 100%; }
+        }
+
+        /* --- CURSOR --- */
+        #cursor-ball {
+            width: 30px;
+            height: 30px;
+            background: var(--neon-yellow);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* --- MOBILE --- */
+        @media (max-width: 1100px) {
+            .hero-content { 
+                flex-direction: column; 
+                align-items: flex-start;
+                padding: 0 40px;
+            }
+            .hero-description {
+                max-width: 100%;
+                margin-top: 40px;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .hero-content { padding: 0 20px; }
+            .hero-title { font-size: 4rem; }
+            .glass-panel { grid-template-columns: 1fr; padding: 30px; }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div id="cursor-ball"></div>
+    <div class="scanlines"></div>
+    <div class="grain"></div>
+
+    <!-- KINETIC TICKER -->
+    <div class="ticker-wrap">
+        <div class="ticker">
+            <div class="ticker-item">&nbsp; // THE BIG T // LIVE FROM THE GREENROOM // WEEKLY ON TENNIS CHANNEL // NO SCRIPTS // NO FILTER // &nbsp;</div>
+            <div class="ticker-item">&nbsp; // THE BIG T // LIVE FROM THE GREENROOM // WEEKLY ON TENNIS CHANNEL // NO SCRIPTS // NO FILTER // &nbsp;</div>
+            <div class="ticker-item">&nbsp; // THE BIG T // LIVE FROM THE GREENROOM // WEEKLY ON TENNIS CHANNEL // NO SCRIPTS // NO FILTER // &nbsp;</div>
+        </div>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-video-mock"></div>
+        <div class="hero-vignette"></div>
+        <div class="hero-content">
+            <div class="hero-main-group">
+                <span class="hero-tagline">Access the Inner Circle</span>
+                <h1 class="hero-title">THE<br><span class="outline-text">BIG T</span></h1>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <a href="#episodes" class="btn-action">
+                        <i data-lucide="play"></i> Stream Latest
+                    </a>
+                    <a href="#" style="color: #fff; text-decoration: none; font-family: var(--font-display); font-weight: 700; display: flex; align-items: center; gap: 10px; border: 1px solid var(--border-glass); padding: 0 30px; text-transform: uppercase;">
+                        Subscribe
+                    </a>
+                </div>
+            </div>
+
+            <div class="hero-description">
+                Tennis Channel insiders <strong>Brad Gilbert, Coco Vandeweghe, Andrea Petkovic,</strong> and <strong>Mark Petchey</strong> come together weekly on <span class="highlight">THE BIG T</span> to guide fans through the biggest storylines, sharpest debates, and competitive chaos shaping the global tennis landscape.
+                <br><br>
+                This is tennis talk from the inside. With <span class="highlight">60+ years of combined experience</span>, pulling up a chair here means getting <strong>unfiltered insight</strong> you won't find anywhere else.
+            </div>
+        </div>
+    </section>
+
+    <!-- SQUAD SECTION -->
+    <section class="squad-section">
+        <div class="court-lines"></div>
+        <div class="container">
+            <div style="margin-bottom: 80px; text-align: center;">
+                <h2 style="font-size: 4rem; margin-bottom: 10px;">THE <span class="outline-text">SQUAD</span></h2>
+                <p style="font-family: var(--font-mono); color: #555; letter-spacing: 5px;">ELITE TENNIS INTELLIGENCE</p>
+            </div>
+
+            <div class="talent-grid">
+                <!-- BRAD -->
+                <div class="talent-card" data-tilt>
+                    <div class="talent-img-wrapper">
+                        <img src="https://i.postimg.cc/N0LQr659/brad.png" alt="Brad Gilbert" class="talent-img">
+                    </div>
+                    <div class="talent-overlay">
+                        <span class="talent-stat">20x ATP Titles // Legendary Coach</span>
+                        <div class="talent-name-big">BRAD<br>GILBERT</div>
+                    </div>
+                </div>
+
+                <!-- COCO -->
+                <div class="talent-card" data-tilt>
+                    <div class="talent-img-wrapper">
+                        <img src="https://i.postimg.cc/QMVjWQH8/coco.png" alt="Coco Vandeweghe" class="talent-img">
+                    </div>
+                    <div class="talent-overlay">
+                        <span class="talent-stat">US Open Champ // Fearless Voice</span>
+                        <div class="talent-name-big">COCO<br>VANDEWEGHE</div>
+                    </div>
+                </div>
+
+                <!-- ANDREA -->
+                <div class="talent-card" data-tilt>
+                    <div class="talent-img-wrapper">
+                        <img src="https://i.postimg.cc/PqNd8WPd/andrea.png" alt="Andrea Petkovic" class="talent-img">
+                    </div>
+                    <div class="talent-overlay">
+                        <span class="talent-stat">Fmr World No. 9 // Storyteller</span>
+                        <div class="talent-name-big">ANDREA<br>PETKOVIC</div>
+                    </div>
+                </div>
+
+                <!-- MARK -->
+                <div class="talent-card" data-tilt>
+                    <div class="talent-img-wrapper">
+                        <img src="https://i.postimg.cc/253CBQVL/mark.png" alt="Mark Petchey" class="talent-img">
+                    </div>
+                    <div class="talent-overlay">
+                        <span class="talent-stat">Technical Genius // Murray's Coach</span>
+                        <div class="talent-name-big">MARK<br>PETCHEY</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HUB SECTION -->
+    <section id="episodes" class="audio-section">
+        <div class="container">
+            <div class="glass-panel">
+                <div>
+                    <div class="sound-bars">
+                        <div class="bar" style="animation-delay: 0.1s"></div>
+                        <div class="bar" style="animation-delay: 0.3s"></div>
+                        <div class="bar" style="animation-delay: 0.2s"></div>
+                        <div class="bar" style="animation-delay: 0.5s"></div>
+                        <div class="bar" style="animation-delay: 0.4s"></div>
+                    </div>
+                    <h3 style="font-size: 3rem; margin-bottom: 20px;">ON AIR <span class="outline-text">NOW</span></h3>
+                    <p style="color: #888; margin-bottom: 40px; font-size: 1.1rem;">
+                        The insiders break down the "Sincaraz" rivalry, the future of the WTA, and the technical shifts changing the pro tour.
+                    </p>
+                    <div style="background: rgba(255,255,255,0.03); padding: 30px; border-left: 2px solid var(--neon-yellow);">
+                        <p style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--neon-yellow); margin-bottom: 10px;">NEXT EPISODE</p>
+                        <p style="font-weight: 700;">Melbourne Heat & Grand Slam Predictions</p>
+                        <p style="font-size: 0.8rem; color: #555;">Drops Wednesday, 6:00 AM EST</p>
+                    </div>
+                </div>
+
+                <div style="background: #000; padding: 15px; border: 1px solid var(--border-glass); border-radius: 20px;">
+                <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/show/5xkp7cTYti3mPnrqZRCawT?utm_source=generator" width="100%" height="352" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer style="padding: 100px 0; border-top: 1px solid var(--border-glass); text-align: center;">
+        <div class="container">
+            <img src="https://i.postimg.cc/XJ4rFTZQ/Logo-(1).png" alt="The Big T" style="height: 40px; opacity: 0.4; margin-bottom: 40px;">
+            <div style="display: flex; justify-content: center; gap: 40px; margin-bottom: 40px;">
+                <a href="#" style="color: #666; text-decoration: none; font-weight: 700; text-transform: uppercase;">Spotify</a>
+                <a href="#" style="color: #666; text-decoration: none; font-weight: 700; text-transform: uppercase;">Apple</a>
+                <a href="#" style="color: #666; text-decoration: none; font-weight: 700; text-transform: uppercase;">YouTube</a>
+            </div>
+            <p style="font-family: var(--font-mono); color: #333; font-size: 0.7rem; letter-spacing: 2px;">
+                &copy; 2025 TENNIS CHANNEL BROADCASTING. ALL SYSTEMS GO.
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // 3D Tilt Logic
+        const cards = document.querySelectorAll('.talent-card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const rotateX = (y - centerY) / 10;
+                const rotateY = (centerX - x) / 10;
+                
+                card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+            
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = `rotateX(0deg) rotateY(0deg) scale(1)`;
+            });
+        });
+
+        // Custom Cursor
+        const cursor = document.getElementById('cursor-ball');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
+        // Cursor scale on hover
+        const targets = document.querySelectorAll('a, button, .talent-card');
+        targets.forEach(t => {
+            t.addEventListener('mouseenter', () => {
+                cursor.style.width = '80px';
+                cursor.style.height = '80px';
+            });
+            t.addEventListener('mouseleave', () => {
+                cursor.style.width = '30px';
+                cursor.style.height = '30px';
+            });
+        });
+    </script>
+</body>
+</html>
