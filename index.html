@@ -159,7 +159,7 @@
             justify-content: center;
             align-items: center;
             width: 100%;
-            gap: 100px;
+            gap: 60px;
         }
 
         .hero-main-group {
@@ -333,6 +333,13 @@
             line-height: 0.85;
             margin-bottom: 8px;
             word-break: break-word;
+        }
+        
+        /* New utility class to handle long names like Vandeweghe */
+        .fit-long-name {
+            font-size: 0.7em; /* Scales down to 70% of parent font size */
+            white-space: nowrap; /* Forces text to stay on one line */
+            display: inline-block;
         }
 
         .talent-stat {
@@ -529,7 +536,7 @@
                     </div>
                     <div class="talent-overlay">
                         <span class="talent-stat">2018 US Open Doubles Champion</span>
-                        <div class="talent-name-big">COCO<br>VANDEWEGHE</div>
+                        <div class="talent-name-big">COCO<br><span class="fit-long-name">VANDEWEGHE</span></div>
                     </div>
                 </div>
 
